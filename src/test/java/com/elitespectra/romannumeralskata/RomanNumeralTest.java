@@ -35,32 +35,47 @@ public class RomanNumeralTest {
         assertEquals("C̄", romanNumeral.numberToRomanNumeral(100_000));
         assertEquals("L̄XX", romanNumeral.numberToRomanNumeral(50_020));
 
-        assertEquals("", romanNumeral.numberToRomanNumeral(0));
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            romanNumeral.numberToRomanNumeral(-5);
-        });
+        assertThrows(IllegalArgumentException.class, () -> romanNumeral.numberToRomanNumeral(0));
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            romanNumeral.numberToRomanNumeral(4_000_000);
-        });
+        assertThrows(IllegalArgumentException.class, () -> romanNumeral.numberToRomanNumeral(-5));
+
+        assertThrows(IllegalArgumentException.class, () -> romanNumeral.numberToRomanNumeral(4_000_000));
 
     }
 
-//    @Test
-//    public void checkRomanNumeralToNumber() {
-//
-//        assertEquals(1, romanNumeral.romanNumeralToNumber("I"));
-//        assertEquals(2, romanNumeral.romanNumeralToNumber("II"));
-//        assertEquals(3, romanNumeral.romanNumeralToNumber("III"));
-//        assertEquals(4, romanNumeral.romanNumeralToNumber("IV"));
-//        assertEquals(5, romanNumeral.romanNumeralToNumber("V"));
-//        assertEquals(6, romanNumeral.romanNumeralToNumber("VI"));
-//        assertEquals(7, romanNumeral.romanNumeralToNumber("VII"));
-//        assertEquals(8, romanNumeral.romanNumeralToNumber("VIII"));
-//        assertEquals(9, romanNumeral.romanNumeralToNumber("IX"));
-//        assertEquals(10, romanNumeral.romanNumeralToNumber("X"));
-//
-//    }
+
+    @Test
+    public void checkRomanNumeralToNumber() {
+
+        assertEquals(1, romanNumeral.romanNumeralToNumber("I"));
+        assertEquals(2, romanNumeral.romanNumeralToNumber("II"));
+        assertEquals(3, romanNumeral.romanNumeralToNumber("III"));
+        assertEquals(4, romanNumeral.romanNumeralToNumber("IV"));
+        assertEquals(5, romanNumeral.romanNumeralToNumber("V"));
+        assertEquals(6, romanNumeral.romanNumeralToNumber("VI"));
+        assertEquals(7, romanNumeral.romanNumeralToNumber("VII"));
+        assertEquals(8, romanNumeral.romanNumeralToNumber("VIII"));
+        assertEquals(9, romanNumeral.romanNumeralToNumber("IX"));
+        assertEquals(10, romanNumeral.romanNumeralToNumber("X"));
+        assertEquals(10, romanNumeral.romanNumeralToNumber("X"));
+
+        assertEquals(13, romanNumeral.romanNumeralToNumber("XIII"));
+        assertEquals(15, romanNumeral.romanNumeralToNumber("XV"));
+        assertEquals(40, romanNumeral.romanNumeralToNumber("XL"));
+        assertEquals(204, romanNumeral.romanNumeralToNumber("CCIV"));
+
+        assertEquals(999, romanNumeral.romanNumeralToNumber("CMXCIX"));
+        assertEquals(3_000, romanNumeral.romanNumeralToNumber("MMM"));
+        assertEquals(2_451, romanNumeral.romanNumeralToNumber("MMCDLI"));
+        assertEquals(3_999, romanNumeral.romanNumeralToNumber("MMMCMXCIX"));
+
+
+        assertThrows(IllegalArgumentException.class, () -> romanNumeral.romanNumeralToNumber(""));
+        assertThrows(IllegalArgumentException.class, () -> romanNumeral.romanNumeralToNumber("ZOO"));
+        assertThrows(IllegalArgumentException.class, () -> romanNumeral.romanNumeralToNumber("MMMM"));
+
+    }
+
 
 }

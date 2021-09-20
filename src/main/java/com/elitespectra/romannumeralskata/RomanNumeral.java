@@ -1,12 +1,15 @@
 package com.elitespectra.romannumeralskata;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class RomanNumeral {
 
     public String numberToRomanNumeral(long number) {
 
-        if (number >= 4_000_000) throw new IllegalArgumentException("Roman Numerals only support up to 3,999,999");
+        if (number < 1 || number >= 4_000_000) throw new IllegalArgumentException(
+                "Roman Numerals only support from 1 to 3,999,999");
 
         Map<String, Map<String, String>> romanNumeralCharMap = Map.of(
                 "millions", Map.of(
@@ -81,12 +84,61 @@ public class RomanNumeral {
         return result;
     }
 
-//    public int romanNumeralToNumber(String romanNumeral) {
-//
-//        int number = 0;
-//
-//        return number;
-//    }
+    public long romanNumeralToNumber(String romanNumeral) {
+
+        if (romanNumeral.isEmpty()) throw new IllegalArgumentException("Blank numerals not allowed");
+
+        romanNumeral = romanNumeral.toUpperCase();
+
+        if (!romanNumeral.matches("M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})"))
+            throw new IllegalArgumentException("Invalid Roman Numeral");
+
+
+        var romanNumeralValues = new HashMap<>();
+        romanNumeralValues.put("I", 1);
+        romanNumeralValues.put("II", 2);
+        romanNumeralValues.put("III", 3);
+        romanNumeralValues.put("IV", 4);
+        romanNumeralValues.put("V", 5);
+        romanNumeralValues.put("VI", 6);
+        romanNumeralValues.put("VII", 7);
+        romanNumeralValues.put("VIII", 8);
+        romanNumeralValues.put("IX", 9);
+        romanNumeralValues.put("X", 10);
+        romanNumeralValues.put("L", 50);
+        romanNumeralValues.put("C", 100);
+        romanNumeralValues.put("D", 500);
+        romanNumeralValues.put("M", 1_000);
+        romanNumeralValues.put("Ī", 1_000);
+        romanNumeralValues.put("V̄", 5_000);
+        romanNumeralValues.put("X̄", 10_000);
+        romanNumeralValues.put("L̄", 50_000);
+        romanNumeralValues.put("C̄", 100_000);
+        romanNumeralValues.put("D̄", 500_000);
+        romanNumeralValues.put("M̄", 1000_000);
+
+
+        long result = 0;
+        var romanNumeralList = Arrays.asList(romanNumeral.split(""));
+
+        for (var i = 0; i < romanNumeralList.size(); i++) {
+            var romanValueOne = (int) romanNumeralValues.get(romanNumeralList.get(i));
+
+            if (i + 1 == romanNumeralList.size()) {
+                result += (int) romanNumeralValues.get(romanNumeralList.get(i));
+                break;
+            } else {
+                var romanValueTwo = (int) romanNumeralValues.get(romanNumeralList.get(i + 1));
+                if (romanValueOne >= romanValueTwo) {
+                    result += romanValueOne;
+                } else {
+                    result -= romanValueOne;
+                }
+            }
+        }
+
+        return result;
+    }
 
 
     private String appendChars(int times, Map<String, String> romanNumeralCharMap) {
